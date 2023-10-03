@@ -1,12 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:healthcheckup/modules/home_module/controller/homeController.dart';
 import 'package:healthcheckup/modules/home_module/models/popularTestModel.dart';
+import 'package:healthcheckup/modules/home_module/services/homeServices.dart';
 import 'package:healthcheckup/ui_utils/app_CustomText.dart';
 import 'package:healthcheckup/ui_utils/app_colors.dart';
 
 class PopularLabTestCard extends StatelessWidget {
-  final PopularTestCardModel popularTestCardModel;
-  const PopularLabTestCard(this.popularTestCardModel, {super.key});
+  final PopularTestModel popularTestCardModel;
+  bool? cartItem = false;
+  PopularLabTestCard(this.popularTestCardModel, {super.key, this.cartItem});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class PopularLabTestCard extends StatelessWidget {
                   topLeft: Radius.circular(10), topRight: Radius.circular(10))),
           child: Center(
               child: AppText.appText(
-                  text: popularTestCardModel.title,
+                  text: popularTestCardModel.title!,
                   textStyle: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -43,7 +46,7 @@ class PopularLabTestCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText.appText(
-                    text: "Includes ${popularTestCardModel.count} tests",
+                    text: "Includes ${popularTestCardModel.testCount} tests",
                     textStyle: TextStyle(color: AppColors.textColor1),
                   ),
                   Container(
@@ -97,9 +100,18 @@ class PopularLabTestCard extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (cartItem == true) {
+                      HomeServices.removeFromCart(popularTestCardModel.id!);
+                      Get.find<HomeController>().removeCartItemCount();
+                    } else {
+                      HomeServices.addToCart(popularTestCardModel.id!);
+                      Get.find<HomeController>().addCartItemCount();
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.darkblue,
+                      backgroundColor:
+                          !cartItem! ? AppColors.darkblue : AppColors.lightblue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(6))),
                   child: AppText.appText(

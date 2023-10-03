@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:healthcheckup/modules/home_module/controller/homeController.dart';
 import 'package:healthcheckup/ui_utils/app_CustomText.dart';
 import 'package:healthcheckup/ui_utils/app_colors.dart';
 
@@ -31,15 +33,19 @@ class HomepageAppBar extends StatelessWidget implements PreferredSizeWidget {
                     minWidth: 15,
                     minHeight: 15,
                   ),
-                  child: const Center(
-                    child: Text(
-                      "2",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                  child: Center(
+                    child: GetBuilder<HomeController>(
+                        init: HomeController(),
+                        builder: (cartItemController) {
+                          return Text(
+                            cartItemController.cartItemCount.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 8,
+                            ),
+                            textAlign: TextAlign.center,
+                          );
+                        }),
                   ),
                 ),
               ),
