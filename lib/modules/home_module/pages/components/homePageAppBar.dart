@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:healthcheckup/modules/cart_module/pages/cart_page.dart';
 import 'package:healthcheckup/modules/home_module/controller/homeController.dart';
 import 'package:healthcheckup/ui_utils/app_CustomText.dart';
 import 'package:healthcheckup/ui_utils/app_colors.dart';
@@ -50,7 +51,9 @@ class HomepageAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(()=>CartPage());
+                  },
                   icon: const Icon(
                     CupertinoIcons.cart_fill,
                     size: 24,
